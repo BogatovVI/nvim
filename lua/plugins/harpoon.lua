@@ -17,7 +17,7 @@ return {
 
       -- 2. Открыть визуальное меню со списком ваших файлов
       -- Нажимаем Пробел + h (от слова Harpoon)
-      vim.keymap.set("n", "<leader>h", function()
+      vim.keymap.set("n", "<leader>m", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end, { desc = "Открыть меню Harpoon" })
 
