@@ -20,7 +20,7 @@ return {
         ensure_installed = {
           "stylua",     -- Для Lua
           "goimports",  -- Для Go
-          "prettier",   -- Для Web (JS/TS/HTML/CSS/JSON)
+          "prettier",   -- Для Web (JS/TS/HTML/CыSS/JSON)
         },
       })
 
