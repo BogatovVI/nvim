@@ -16,10 +16,10 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Окно справа" })
 -- 5. Быстрое сохранение файла
 keymap("n", "<leader>w", "<cmd>w<CR>", { desc = "Сохранить файл" })
 
--- 6. Управление вкладками буферов
-keymap("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Следующий буфер (вкладка)" })
-keymap("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Предыдущий буфер (вкладка)" })
-keymap("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Закрыть текущий буфер" })
-
 -- 7. Закрыть текущее сплит-окно по нажатию Пробел + q
 keymap("n", "<leader>q", "<cmd>close<CR>", { desc = "Закрыть текущее окно (сплит)" })
+
+-- Переключение на следующую вкладку (буфер)
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true, desc = "Next buffer" })
+-- Переключение на предыдущую вкладку (буфер)
+vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", { silent = true, desc = "Previous buffer" })
