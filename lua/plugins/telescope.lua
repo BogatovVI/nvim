@@ -16,11 +16,22 @@ return {
       
       telescope.setup({
         defaults = {
-          sorting_strategy = "ascending",
+          sorting_strategy = "ascending", 
           layout_config = {
             horizontal = { 
               prompt_position = "top", 
               preview_width = 0.55 
+            },
+          },
+          
+          mappings = {
+            i = { 
+              ["<C-j>"] = require("telescope.actions").move_selection_next,     -- Идти вниз
+              ["<C-k>"] = require("telescope.actions").move_selection_previous, -- Идти вверх
+            },
+            n = { 
+              ["j"] = require("telescope.actions").move_selection_next,         -- Идти вниз
+              ["k"] = require("telescope.actions").move_selection_previous,     -- Идти вверх
             },
           },
         },
