@@ -1,11 +1,11 @@
 local M = {}
 
-M.get_config = function(capabilities)
+function M.get_config(capabilities)
   return {
     capabilities = capabilities,
     settings = {
       ["rust-analyzer"] = {
-        checkOnSave = {
+        check = {
           command = "clippy",
         },
         inlayHints = {

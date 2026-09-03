@@ -1,31 +1,48 @@
--- Лидер-клавиша (Пробел). Важно задать ДО загрузки плагинов и хоткеев
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local opt = vim.opt
 
--- Внешний вид
-opt.number = true          -- Показывать номера строк
-opt.relativenumber = true  -- Относительные номера (удобно для прыжков vi-движениями)
-opt.termguicolors = true   -- Включить поддержку 24-битного цвета в терминале
-opt.cursorline = true      -- Подсвечивать строку, на которой находится курсор
-opt.signcolumn = "yes"     -- Всегда показывать боковую колонку (чтобы код не прыгал при ошибках)
+opt.number = true
+opt.relativenumber = true
+opt.termguicolors = true
+opt.cursorline = true
+opt.signcolumn = "yes"
+opt.laststatus = 3
+opt.showmode = false
+opt.winborder = "rounded"
 
--- Табуляция и отступы
-opt.expandtab = true       -- Преобразовывать табы в пробелы
-opt.tabstop = 4            -- Ширина таба в пробелах
-opt.shiftwidth = 4         -- Размер автоматического отступа
-opt.softtabstop = 4        -- Сколько пробелов вставлять при нажатии Tab
-opt.smartindent = true     -- Умные автоматические отступы
+opt.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.smartindent = true
 
--- Поведение интерфейса
-opt.splitright = true      -- Новые вертикальные сплиты открываются справа
-opt.splitbelow = true      -- Новые горизонтальные сплиты открываются снизу
-opt.ignorecase = true      -- Игнорировать регистр при поиске
-opt.smartcase = true       -- Но учитывать регистр, если в поиске есть заглавная буква
-opt.scrolloff = 8          -- Оставлять 8 строк сверху/снизу при скролле (курсор не упирается в край)
-opt.updatetime = 250       -- Быстрый отклик (в миллисекундах) для автосохранений и подсказок
-opt.startofline = false    -- При переключении вкладок или прыжках курсор будет оставаться на той же колонке, а не сбрасываться в начало строки.
+opt.splitright = true
+opt.splitbelow = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.scrolloff = 10
+opt.sidescrolloff = 8
+opt.updatetime = 400
+opt.startofline = false
 opt.guicursor = "i:block"
+opt.clipboard = "unnamedplus"
 
-opt.clipboard = "unnamedplus" -- Синхронизация с системным буфером обмена Mac (позволяет копировать по 'y' и вставлять через Cmd+V)
+opt.undofile = true
+opt.undolevels = 10000
+opt.swapfile = false
+opt.backup = false
+
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+
+opt.fillchars = {
+  eob = " ",
+  fold = " ",
+  foldopen = "▾",
+  foldclose = "▸",
+  foldsep = " ",
+  diff = "╱",
+}
