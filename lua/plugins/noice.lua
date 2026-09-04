@@ -17,6 +17,16 @@ return {
         lsp_doc_border = true,
       },
       views = {
+        cmdline_popup = {
+          border = { style = "rounded" },
+          position = { row = "30%", col = "50%" },
+          size = { width = 60, height = "auto" },
+        },
+        cmdline_popupmenu = {
+          border = { style = "rounded" },
+          position = { row = "35%", col = "50%" },
+          size = { width = 60, height = 10 },
+        },
         mini = {
           win_options = {
             winblend = 0,
