@@ -214,6 +214,48 @@ return {
           vim.opt_local.cursorline = true
         end,
       })
+
+      local opening_dashboard = false
+      vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+        group = vim.api.nvim_create_augroup("DashboardWhenNoBuffers", { clear = true }),
+        callback = function()
+          if opening_dashboard then
+            return
+          end
+          vim.schedule(function()
+            if opening_dashboard then
+              return
+            end
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+              if
+                vim.api.nvim_buf_is_valid(buf)
+                and vim.bo[buf].buflisted
+                and vim.bo[buf].buftype == ""
+                and vim.api.nvim_buf_get_name(buf) ~= ""
+              then
+                return
+              end
+            end
+            if vim.bo.filetype == "snacks_dashboard" then
+              return
+            end
+            opening_dashboard = true
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+              if
+                vim.api.nvim_buf_is_valid(buf)
+                and vim.bo[buf].buflisted
+                and vim.api.nvim_buf_get_name(buf) == ""
+              then
+                pcall(vim.api.nvim_buf_delete, buf, { force = true })
+              end
+            end
+            require("snacks").dashboard()
+            vim.schedule(function()
+              opening_dashboard = false
+            end)
+          end)
+        end,
+      })
     end,
     keys = {
       { "<leader>e", smart_explorer, desc = "Explorer" },
