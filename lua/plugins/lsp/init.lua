@@ -25,7 +25,6 @@ return {
         },
         run_on_start = false,
       })
-      -- LSP грузится лениво, поэтому VimEnter уже прошёл — ставим инструменты сразу после setup.
       require("mason-tool-installer").check_install(false)
 
       vim.api.nvim_create_autocmd("LspAttach", {

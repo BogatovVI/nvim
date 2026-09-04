@@ -1,6 +1,11 @@
 local keymap = vim.keymap.set
 
-keymap("i", "jk", "<Esc>", { desc = "Выход в нормальный режим" })
+keymap("i", "jk", function()
+  if vim.bo.filetype == "snacks_picker_input" then
+    return "jk"
+  end
+  return "<Esc>"
+end, { expr = true, desc = "Выход в нормальный режим" })
 keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Очистить подсветку поиска" })
 
 keymap("n", "<C-h>", "<C-w>h", { desc = "Окно слева" })
