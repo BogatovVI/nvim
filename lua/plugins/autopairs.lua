@@ -5,7 +5,8 @@ return {
     opts = {
       check_ts = true,
       disable_filetype = { "snacks_picker_input" },
-      map_cr = false,
+      -- Enter внутри {} / () / [] → перенос закрывающей скобки и курсор на новой строке
+      map_cr = true,
     },
     config = function(_, opts)
       local autopairs = require("nvim-autopairs")
