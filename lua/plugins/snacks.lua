@@ -48,6 +48,31 @@ return {
     opts = {
       picker = {
         enabled = true,
+        actions = {
+          focus_list = function(picker)
+            if picker:empty() then
+              picker:close()
+              return
+            end
+            picker.input:stopinsert()
+            vim.schedule(function()
+              picker:focus("list", { show = true })
+            end)
+          end,
+          toggle_focus = function(picker)
+            if vim.api.nvim_get_current_win() == picker.input.win.win then
+              if picker:empty() then
+                return
+              end
+              picker.input:stopinsert()
+              vim.schedule(function()
+                picker:focus("list", { show = true })
+              end)
+            else
+              picker:focus("input", { show = true })
+            end
+          end,
+        },
         sources = {
           select = {
             preview = false,
@@ -108,6 +133,7 @@ return {
         win = {
           input = {
             keys = {
+              ["<Esc>"] = { "focus_list", mode = { "i", "n" } },
               ["<C-j>"] = { "list_down", mode = { "i", "n" } },
               ["<C-k>"] = { "list_up", mode = { "i", "n" } },
               ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
@@ -116,6 +142,8 @@ return {
           },
           list = {
             keys = {
+              ["<Esc>"] = "cancel",
+              ["i"] = false,
               ["<c-s>"] = "edit_split",
               ["<c-v>"] = "edit_vsplit",
             },
