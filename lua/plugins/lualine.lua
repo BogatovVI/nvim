@@ -34,7 +34,12 @@ return {
           {
             "diagnostics",
             sources = { "nvim_diagnostic" },
-            symbols = { error = "E:", warn = "W:", info = "I:", hint = "H:" },
+            symbols = {
+              error = "\u{f015a} ",
+              warn = "\u{f002a} ",
+              info = "\u{f1035} ",
+              hint = "\u{f0336} ",
+            },
           },
           "filetype",
         },

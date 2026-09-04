@@ -30,10 +30,10 @@ return {
         diagnostics_indicator = function(_, _, diag)
           local icons = {}
           if diag.error then
-            table.insert(icons, "E" .. diag.error)
+            table.insert(icons, "\u{f015a} " .. diag.error)
           end
           if diag.warn then
-            table.insert(icons, "W" .. diag.warn)
+            table.insert(icons, "\u{f002a} " .. diag.warn)
           end
           return #icons > 0 and (" " .. table.concat(icons, " ")) or ""
         end,

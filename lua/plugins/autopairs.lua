@@ -5,7 +5,6 @@ return {
     opts = {
       check_ts = true,
       disable_filetype = { "snacks_picker_input" },
-      -- Enter внутри {} / () / [] → перенос закрывающей скобки и курсор на новой строке
       map_cr = true,
     },
     config = function(_, opts)

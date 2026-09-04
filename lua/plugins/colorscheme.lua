@@ -6,16 +6,33 @@ return {
     priority = 1000,
     opts = {
       flavour = "mocha",
-      transparent_background = false,
+      transparent_background = true,
+      float = {
+        transparent = true,
+        solid = false,
+      },
       dim_inactive = {
-        enabled = true,
-        shade = "dark",
-        percentage = 0.15,
+        enabled = false,
       },
       styles = {
         comments = { "italic" },
         conditionals = { "italic" },
       },
+      custom_highlights = function(colors)
+        return {
+          NormalFloat = { bg = colors.none },
+          FloatBorder = { bg = colors.none, fg = colors.blue },
+          FloatTitle = { bg = colors.none, fg = colors.blue },
+          NormalNC = { link = "Normal" },
+          WinSeparator = { fg = colors.surface0 },
+          SnacksNormal = { link = "Normal" },
+          SnacksNormalNC = { link = "Normal" },
+          SnacksPicker = { link = "Normal" },
+          SnacksPickerBorder = { link = "FloatBorder" },
+          SnacksPickerInput = { link = "Normal" },
+          SnacksBackdrop = { bg = colors.none },
+        }
+      end,
       integrations = {
         blink_cmp = true,
         dap = true,

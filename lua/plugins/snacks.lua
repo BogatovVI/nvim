@@ -4,6 +4,7 @@ local telescope_layout = {
     box = "horizontal",
     width = 0.8,
     height = 0.8,
+    backdrop = false,
     {
       box = "vertical",
       border = "rounded",
@@ -19,14 +20,13 @@ local function with_layout(extra)
   return vim.tbl_deep_extend("force", { layout = telescope_layout }, extra or {})
 end
 
-local my_logo = {
-  "███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
-  "████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
-  "██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
-  "██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝ ██║██║╚██╔╝██║",
-  "██║ ╚████║███████╗╚██████╔╝ ╚████╔╝  ██║██║ ╚═╝ ██║",
-  "╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝   ╚═╝╚═╝     ╚═╝",
-}
+local my_logo = [[
+ ██████╗ ██████╗ ██████╗ ███████╗
+██╔════╝██╔═══██╗██╔══██╗██╔════╝
+██║     ██║   ██║██║  ██║█████╗  
+██║     ██║   ██║██║  ██║██╔══╝  
+╚██████╗╚██████╔╝██████╔╝███████╗
+ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝]]
 
 local function snacks()
   return require("snacks")
@@ -57,7 +57,7 @@ return {
             layout = {
               preview = false,
               layout = {
-                backdrop = true,
+                backdrop = false,
                 width = 0.4,
                 min_width = 48,
                 height = 0.7,
@@ -126,11 +126,12 @@ return {
       dashboard = {
         enabled = true,
         sections = {
-          { section = "header", text = my_logo, align = "center", padding = 1 },
+          { section = "header" },
           { section = "keys", gap = 1, padding = 1, align = "center" },
           { section = "startup", padding = 1 },
         },
         preset = {
+          header = my_logo,
           keys = {
             { icon = "\u{f002} ", key = "f", desc = "Find files", action = ":lua Snacks.picker.files()" },
             { icon = "\u{f0a35} ", key = "g", desc = "Grep text", action = ":lua Snacks.picker.grep()" },
@@ -171,7 +172,7 @@ return {
           border = "rounded",
           width = 0.7,
           height = 0.55,
-          backdrop = 60,
+          backdrop = false,
         },
       },
       bigfile = { enabled = true },
