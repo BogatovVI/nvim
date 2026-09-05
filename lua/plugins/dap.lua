@@ -7,11 +7,41 @@ return {
       "leoluz/nvim-dap-go",
     },
     keys = {
-      { "<leader>db", desc = "Точка останова" },
-      { "<leader>dc", desc = "Запуск / продолжить" },
-      { "<leader>do", desc = "Шаг через" },
-      { "<leader>di", desc = "Шаг внутрь" },
-      { "<leader>dq", desc = "Остановить отладку" },
+      {
+        "<leader>db",
+        function()
+          require("dap").toggle_breakpoint()
+        end,
+        desc = "Точка останова",
+      },
+      {
+        "<leader>dc",
+        function()
+          require("dap").continue()
+        end,
+        desc = "Запуск / продолжить",
+      },
+      {
+        "<leader>do",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "Шаг через",
+      },
+      {
+        "<leader>di",
+        function()
+          require("dap").step_into()
+        end,
+        desc = "Шаг внутрь",
+      },
+      {
+        "<leader>dq",
+        function()
+          require("dap").terminate()
+        end,
+        desc = "Остановить отладку",
+      },
     },
     config = function()
       local dap = require("dap")
@@ -116,12 +146,6 @@ return {
         linehl = "Visual",
         numhl = "DiagnosticWarn",
       })
-
-      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Точка останова" })
-      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Запуск / продолжить" })
-      vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Шаг через" })
-      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Шаг внутрь" })
-      vim.keymap.set("n", "<leader>dq", dap.terminate, { desc = "Остановить отладку" })
     end,
   },
 }

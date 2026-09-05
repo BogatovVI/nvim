@@ -11,7 +11,7 @@ return {
         { "<leader>c", group = "Код" },
         { "<leader>d", group = "Отладка" },
         { "<leader>g", group = "Git" },
-        { "<leader>h", group = "Git hunks" },
+        { "<leader>h", group = "Hunks / Harpoon" },
         { "<leader>i", group = "Inlay hints" },
         { "<leader>r", group = "Запуск" },
         { "<leader>s", group = "LSP / поиск" },

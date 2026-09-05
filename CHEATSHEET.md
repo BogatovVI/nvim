@@ -10,9 +10,13 @@
 | `<C-h/j/k/l>` | Переключение окон |
 | `<leader>w` | Сохранить |
 | `<leader>q` | Закрыть окно |
+| `q` на welcome | Выйти из Neovim (`:qa`) |
 | `<Tab>` / `<S-Tab>` | Следующий / предыдущий буфер (вкладки сверху) |
 | `<leader>fb` | Список буферов (picker) |
 | `<leader>bp` | Pin буфер |
+| `<leader>bd` | Закрыть буфер |
+| `<leader>bc` | Закрыть другие буферы |
+| `<leader>bX` | Закрыть все буферы |
 
 ## Поиск (Snacks)
 | Клавиша | Действие |
@@ -31,7 +35,22 @@
 | `Enter` / `l` | Открыть файл |
 | `v` / `<C-v>` | Вертикальный сплит |
 | `s` / `<C-s>` | Горизонтальный сплит |
-| `h` | Закрыть папку (explorer) |
+| `Esc` / `q` | Закрыть explorer / picker |
+| `Tab` | Переключить фокус input ↔ список |
+| `<BS>` | Вверх по папкам (explorer) |
+| `h` | Свернуть папку (explorer) |
+
+На welcome:
+| Клавиша | Действие |
+|---------|----------|
+| `f` | Find files |
+| `g` | Grep |
+| `n` | Новый файл |
+| `e` | Explorer |
+| `l` | Lazy |
+| `m` | Mason |
+| `s` | Session |
+| `q` | Quit |
 
 ## LSP
 | Клавиша | Действие |
@@ -91,8 +110,8 @@
 |---------|----------|
 | `s` | Flash jump |
 | `S` | Flash treesitter |
-| `<leader>a` | Harpoon add |
-| `<leader>m` | Harpoon menu |
+| `<leader>ha` | Harpoon add |
+| `<leader>hm` | Harpoon menu |
 | `<leader>1-4` | Harpoon file 1-4 |
 
 ## Сессии
@@ -106,6 +125,8 @@
 | Клавиша | Действие |
 |---------|----------|
 | `<leader>fm` | Форматировать буфер |
-| `<leader>xx` | Trouble diagnostics |
+| `<leader>xx` | Trouble diagnostics проекта |
+| `<leader>xX` | Trouble diagnostics файла |
+| `<leader>xs` | Trouble symbols |
 | `<leader>?` | Which-key |
 | `<C-k>` | Signature help (insert) |

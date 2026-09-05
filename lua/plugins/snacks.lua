@@ -21,23 +21,73 @@ local function with_layout(extra)
 end
 
 local my_logo = [[
- ██████╗ ██████╗ ██████╗ ███████╗
-██╔════╝██╔═══██╗██╔══██╗██╔════╝
-██║     ██║   ██║██║  ██║█████╗  
-██║     ██║   ██║██║  ██║██╔══╝  
-╚██████╗╚██████╔╝██████╔╝███████╗
- ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝]]
+ ██████╗  ██████╗  ██████╗  ███████╗
+██╔════╝ ██╔═══██╗ ██╔══██╗ ██╔════╝
+██║      ██║   ██║ ██║  ██║ █████╗  
+██║      ██║   ██║ ██║  ██║ ██╔══╝  
+╚██████╗ ╚██████╔╝ ██████╔╝ ███████╗
+ ╚═════╝  ╚═════╝  ╚═════╝  ╚══════╝]]
 
 local function snacks()
   return require("snacks")
 end
 
-local function smart_explorer()
-  if vim.bo.filetype == "snacks_dashboard" then
-    snacks().picker.files()
-  else
-    snacks().explorer()
+local function open_explorer()
+  snacks().explorer()
+end
+
+local function is_snacks_ui(buf)
+  if not vim.api.nvim_buf_is_valid(buf) then
+    return true
   end
+  local ft = vim.bo[buf].filetype
+  return type(ft) == "string" and ft:match("^snacks_") ~= nil
+end
+
+local function has_file_buffers()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if
+      vim.api.nvim_buf_is_valid(buf)
+      and vim.bo[buf].buflisted
+      and vim.bo[buf].buftype == ""
+      and vim.api.nvim_buf_get_name(buf) ~= ""
+      and not is_snacks_ui(buf)
+    then
+      return true
+    end
+  end
+  return false
+end
+
+local function wipe_unnamed_buffers()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if
+      vim.api.nvim_buf_is_valid(buf)
+      and vim.bo[buf].buflisted
+      and vim.bo[buf].buftype == ""
+      and vim.api.nvim_buf_get_name(buf) == ""
+      and not is_snacks_ui(buf)
+    then
+      pcall(vim.api.nvim_buf_delete, buf, { force = true })
+    end
+  end
+end
+
+local opening_dashboard = false
+
+local function show_dashboard_if_empty()
+  if opening_dashboard or has_file_buffers() then
+    return
+  end
+  if vim.bo.filetype == "snacks_dashboard" then
+    return
+  end
+  opening_dashboard = true
+  wipe_unnamed_buffers()
+  snacks().dashboard()
+  vim.schedule(function()
+    opening_dashboard = false
+  end)
 end
 
 return {
@@ -100,9 +150,13 @@ return {
               list = {
                 keys = {
                   ["/"] = "focus_input",
+                  ["<Esc>"] = "cancel",
+                  ["q"] = "cancel",
                   ["<CR>"] = "confirm",
                   ["l"] = "confirm",
                   ["h"] = "explorer_close",
+                  ["<BS>"] = "explorer_up",
+                  ["<Tab>"] = "toggle_focus",
                   ["s"] = "edit_split",
                   ["v"] = "edit_vsplit",
                   ["<c-s>"] = "edit_split",
@@ -112,6 +166,7 @@ return {
               input = {
                 keys = {
                   ["<Esc>"] = { "focus_list", mode = { "i", "n" } },
+                  ["<Tab>"] = { "toggle_focus", mode = { "i", "n" } },
                   ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
                   ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
                 },
@@ -134,6 +189,7 @@ return {
           input = {
             keys = {
               ["<Esc>"] = { "focus_list", mode = { "i", "n" } },
+              ["<Tab>"] = { "toggle_focus", mode = { "i", "n" } },
               ["<C-j>"] = { "list_down", mode = { "i", "n" } },
               ["<C-k>"] = { "list_up", mode = { "i", "n" } },
               ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
@@ -143,6 +199,7 @@ return {
           list = {
             keys = {
               ["<Esc>"] = "cancel",
+              ["<Tab>"] = "toggle_focus",
               ["i"] = false,
               ["<c-s>"] = "edit_split",
               ["<c-v>"] = "edit_vsplit",
@@ -153,22 +210,23 @@ return {
       explorer = { enabled = true },
       dashboard = {
         enabled = true,
+        width = 60,
         sections = {
           { section = "header" },
-          { section = "keys", gap = 1, padding = 1, align = "center" },
+          { section = "keys", gap = 1, padding = 1 },
           { section = "startup", padding = 1 },
         },
         preset = {
           header = my_logo,
           keys = {
-            { icon = "\u{f002} ", key = "f", desc = "Find files", action = ":lua Snacks.picker.files()" },
-            { icon = "\u{f0a35} ", key = "g", desc = "Grep text", action = ":lua Snacks.picker.grep()" },
-            { icon = "\u{f015b} ", key = "n", desc = "New file", action = ":ene | startinsert" },
-            { icon = "\u{f01c3} ", key = "e", desc = "Explorer", action = ":lua Snacks.explorer()" },
-            { icon = "\u{f135} ", key = "l", desc = "Lazy", action = ":Lazy" },
-            { icon = "\u{f085} ", key = "m", desc = "Mason", action = ":Mason" },
-            { icon = "\u{f017} ", key = "s", desc = "Session", action = ":lua require('persistence').load()" },
-            { icon = "\u{f08b} ", key = "q", desc = "Quit", action = ":qa" },
+            { icon = " ", key = "f", desc = "Find files", action = ":lua Snacks.picker.files()" },
+            { icon = " ", key = "g", desc = "Grep text", action = ":lua Snacks.picker.grep()" },
+            { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
+            { icon = "󰙅 ", key = "e", desc = "Explorer", action = ":lua Snacks.explorer()" },
+            { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+            { icon = "󱌢 ", key = "m", desc = "Mason", action = ":Mason" },
+            { icon = " ", key = "s", desc = "Session", action = ":lua require('persistence').load()" },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
         },
       },
@@ -215,50 +273,18 @@ return {
         end,
       })
 
-      local opening_dashboard = false
-      vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+      vim.api.nvim_create_autocmd("BufDelete", {
         group = vim.api.nvim_create_augroup("DashboardWhenNoBuffers", { clear = true }),
-        callback = function()
-          if opening_dashboard then
+        callback = function(ev)
+          if opening_dashboard or is_snacks_ui(ev.buf) then
             return
           end
-          vim.schedule(function()
-            if opening_dashboard then
-              return
-            end
-            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-              if
-                vim.api.nvim_buf_is_valid(buf)
-                and vim.bo[buf].buflisted
-                and vim.bo[buf].buftype == ""
-                and vim.api.nvim_buf_get_name(buf) ~= ""
-              then
-                return
-              end
-            end
-            if vim.bo.filetype == "snacks_dashboard" then
-              return
-            end
-            opening_dashboard = true
-            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-              if
-                vim.api.nvim_buf_is_valid(buf)
-                and vim.bo[buf].buflisted
-                and vim.api.nvim_buf_get_name(buf) == ""
-              then
-                pcall(vim.api.nvim_buf_delete, buf, { force = true })
-              end
-            end
-            require("snacks").dashboard()
-            vim.schedule(function()
-              opening_dashboard = false
-            end)
-          end)
+          vim.schedule(show_dashboard_if_empty)
         end,
       })
     end,
     keys = {
-      { "<leader>e", smart_explorer, desc = "Explorer" },
+      { "<leader>e", open_explorer, desc = "Explorer" },
       { "<leader>ff", function() snacks().picker.files() end, desc = "Найти файлы" },
       { "<leader>fg", function() snacks().picker.grep() end, desc = "Найти текст" },
       { "<leader>fb", function() snacks().picker.buffers() end, desc = "Найти буферы" },
@@ -268,7 +294,14 @@ return {
       { "<leader>ss", function() snacks().picker.lsp_symbols() end, desc = "LSP symbols" },
       { "<leader>bd", function() snacks().bufdelete() end, desc = "Удалить буфер" },
       { "<leader>bc", function() snacks().bufdelete.other() end, desc = "Удалить другие буферы" },
-      { "<leader>bX", function() snacks().bufdelete.all() end, desc = "Удалить все буферы" },
+      {
+        "<leader>bX",
+        function()
+          snacks().bufdelete.all()
+          vim.schedule(show_dashboard_if_empty)
+        end,
+        desc = "Удалить все буферы",
+      },
       {
         [[<C-\>]],
         function()

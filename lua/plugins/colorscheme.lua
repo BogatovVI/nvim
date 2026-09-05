@@ -39,7 +39,6 @@ return {
         dap_ui = true,
         gitsigns = true,
         harpoon = true,
-        indent_blankline = { enabled = true },
         lsp_trouble = true,
         mason = true,
         mini = { enabled = true },
