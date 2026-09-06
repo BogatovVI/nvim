@@ -13,7 +13,7 @@ return {
         { "<leader>g", group = "Git" },
         { "<leader>h", group = "Hunks / Harpoon" },
         { "<leader>i", group = "Inlay hints" },
-        { "<leader>r", group = "Запуск" },
+        { "<leader>r", group = "Замена" },
         { "<leader>s", group = "LSP / поиск" },
         { "<leader>S", group = "Сессия" },
         { "<leader>t", group = "Тесты" },

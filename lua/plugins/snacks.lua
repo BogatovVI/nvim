@@ -310,9 +310,6 @@ return {
         mode = { "n", "t", "i" },
         desc = "Терминал (toggle)",
       },
-      { "<leader>rg", function() snacks().terminal("go test ./...") end, desc = "go test ./..." },
-      { "<leader>rt", function() snacks().terminal("cargo test") end, desc = "cargo test" },
-      { "<leader>rb", function() snacks().terminal("cargo build") end, desc = "cargo build" },
     },
   },
 }
