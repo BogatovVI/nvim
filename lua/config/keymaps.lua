@@ -16,6 +16,10 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Окно справа" })
 keymap("n", "<leader>w", "<cmd>w<CR>", { desc = "Сохранить файл" })
 keymap("n", "<leader>q", "<cmd>close<CR>", { desc = "Закрыть текущее окно" })
 
+keymap("n", "<leader>rw", ":%s/\\<<C-r><C-w>\\>//g<Left><Left>", { desc = "Заменить слово в файле" })
+keymap("n", "<leader>rc", ":%s/\\<<C-r><C-w>\\>//gc<Left><Left><Left>", { desc = "Заменить слово с подтверждением" })
+keymap("v", "<leader>rw", ":s//g<Left><Left>", { desc = "Заменить в выделении" })
+
 keymap("t", "<Esc>", [[<C-\><C-n>]], { desc = "Выход из terminal mode" })
 keymap("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "Окно слева" })
 keymap("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "Окно снизу" })
