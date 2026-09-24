@@ -31,6 +31,7 @@ return {
           SnacksPickerBorder = { link = "FloatBorder" },
           SnacksPickerInput = { link = "Normal" },
           SnacksBackdrop = { bg = colors.none },
+          SnacksPickerGitStatusUntracked = { fg = colors.mauve },
         }
       end,
       integrations = {
