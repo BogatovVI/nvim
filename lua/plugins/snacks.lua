@@ -129,6 +129,7 @@ return {
             layout = { preset = "select", width = 0.4, height = 0.3 },
           },
           explorer = {
+            git_status_open = true,
             layout = {
               preview = false,
               layout = {
@@ -266,6 +267,14 @@ return {
     },
     config = function(_, opts)
       require("snacks").setup(opts)
+      local Git = require("snacks.picker.source.git")
+      local merge_status = Git.merge_status
+      function Git.merge_status(a, b)
+        if a == "??" or b == "??" then
+          return "??"
+        end
+        return merge_status(a, b)
+      end
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "snacks_dashboard",
         callback = function()
