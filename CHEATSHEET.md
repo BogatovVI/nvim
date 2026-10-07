@@ -96,7 +96,9 @@
 ## Git
 | Клавиша | Действие |
 |---------|----------|
-| `<leader>gs` | Git status |
+| `<leader>gs` | Git status (список файлов + превью) |
+| `Tab` в git status | input ↔ список (как в других picker) |
+| `s` / `r` в git status | stage / restore файла |
 | `<leader>gg` | LazyGit |
 | `]h` / `[h` | Следующий / предыдущий hunk |
 | `<leader>hp` | Preview hunk |

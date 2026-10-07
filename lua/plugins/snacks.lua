@@ -178,7 +178,26 @@ return {
           grep = with_layout(),
           buffers = with_layout(),
           help = with_layout(),
-          git_status = with_layout(),
+          git_status = with_layout({
+            -- Same as files/grep: Tab switches input ↔ list, not stage.
+            -- Open on the file list, not in the filter.
+            focus = "list",
+            win = {
+              input = {
+                keys = {
+                  ["<Tab>"] = { "toggle_focus", mode = { "i", "n" } },
+                  ["<Esc>"] = { "focus_list", mode = { "i", "n" } },
+                },
+              },
+              list = {
+                keys = {
+                  ["<Tab>"] = "toggle_focus",
+                  ["s"] = "git_stage",
+                  ["r"] = "git_restore",
+                },
+              },
+            },
+          }),
           diagnostics = with_layout(),
           lsp_symbols = with_layout(),
           lsp_definitions = with_layout(),
